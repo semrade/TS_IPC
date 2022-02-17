@@ -56,8 +56,8 @@ PAGE 1 :
 SECTIONS
 {
    /* Allocate program areas: */
-   .cinit              : > FLASHB      PAGE = 0, ALIGN(8)
-   .text               : > FLASHB      PAGE = 0, ALIGN(8)
+   .cinit              : > FLASHA      PAGE = 0, ALIGN(8)
+   .text               : > FLASHA      PAGE = 0, ALIGN(8)
    codestart           : > BEGIN       PAGE = 0, ALIGN(8)
 
    /* Allocate uninitalized data sections: */

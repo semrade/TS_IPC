@@ -241,13 +241,15 @@ void main(void)
     // flash if used.
     Device_init();
 
+    //reset cpu2
+
 #ifdef _STANDALONE
 #ifdef _FLASH
     // TODO check to see if this breaks.
-    Device_bootCPU2(BOOTMODE_BOOT_TO_FLASH_SECTOR0);
+    Device_bootCPU2(C1C2_BROM_BOOTMODE_BOOT_FROM_FLASH);
 #else
     // TODO this breaks the RAM build.
-    Device_bootCPU2(BOOTMODE_BOOT_TO_M0RAM);
+    Device_bootCPU2(C1C2_BROM_BOOTMODE_BOOT_FROM_RAM);
 #endif
 #endif
 
