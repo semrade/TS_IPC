@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="DefaultStylesheet.xsl"?>
+<log>
+<record>
+  <date>2022-03-05T12:12:02.084688600Z</date>
+  <millis>1646482322084</millis>
+  <nanos>688600</nanos>
+  <sequence>101</sequence>
+  <logger>com.ti</logger>
+  <level>INFO</level>
+  <class>com.ti.ccstudio.scripting.environment.ScriptingEnvironment</class>
+  <method>traceWrite</method>
+  <thread>28</thread>
+  <message>Connecting to device...</message>
+</record>
+<record>
+  <date>2022-03-05T12:12:06.733763500Z</date>
+  <millis>1646482326733</millis>
+  <nanos>763500</nanos>
+  <sequence>108</sequence>
+  <logger>com.ti.debug.engine.scripting.DebugSession</logger>
+  <level>INFO</level>
+  <class>com.ti.debug.engine.scripting.DebugSession$DebuggerInfoListener</class>
+  <method>onEvent</method>
+  <thread>42</thread>
+  <message>C28xx_CPU1: GEL Output: 
+Memory Map Initialization Complete
+</message>
+</record>
+<record>
+  <date>2022-03-05T12:12:07.316891200Z</date>
+  <millis>1646482327316</millis>
+  <nanos>891200</nanos>
+  <sequence>109</sequence>
+  <logger>com.ti.debug.engine.scripting.DebugSession</logger>
+  <level>INFO</level>
+  <class>com.ti.debug.engine.scripting.DebugSession$DebuggerInfoListener</class>
+  <method>onEvent</method>
+  <thread>45</thread>
+  <message>C28xx_CPU1: If erase/program (E/P) operation is being done on one core, the other core should not execute from shared-RAM (SR) as they are used for the E/P code. Also, CPU1 will be halted to determine SR ownership for the CPU which will run the Flash Plugin code, after which CPU1 will be set to run its application. User code execution from SR could commence after both flash banks are programmed.
+</message>
+</record>
+<record>
+  <date>2022-03-05T12:12:24.188594800Z</date>
+  <millis>1646482344188</millis>
+  <nanos>594800</nanos>
+  <sequence>116</sequence>
+  <logger>com.ti</logger>
+  <level>INFO</level>
+  <class>com.ti.ccstudio.scripting.environment.ScriptingEnvironment</class>
+  <method>traceWrite</method>
+  <thread>28</thread>
+  <message>Connected.</message>
+</record>
+<record>
+  <date>2022-03-05T12:12:27.350813300Z</date>
+  <millis>1646482347350</millis>
+  <nanos>813300</nanos>
+  <sequence>117</sequence>
+  <logger>com.ti</logger>
+  <level>INFO</level>
+  <class>com.ti.ccstudio.scripting.environment.ScriptingEnvironment</class>
+  <method>traceWrite</method>
+  <thread>28</thread>
+  <message>Load Program: module11_ipc_cpu1.out</message>
+</record>
+<record>
+  <date>2022-03-05T12:12:27.350813300Z</date>
+  <millis>1646482347350</millis>
+  <nanos>813300</nanos>
+  <sequence>118</sequence>
+  <logger>com.ti</logger>
+  <level>INFO</level>
+  <class>com.ti.ccstudio.scripting.environment.ScriptingEnvironment</class>
+  <method>traceWrite</method>
+  <thread>28</thread>
+  <message>Loading...</message>
+</record>
+<record>
+  <date>2022-03-05T12:12:27.354805500Z</date>
+  <millis>1646482347354</millis>
+  <nanos>805500</nanos>
+  <sequence>119</sequence>
+  <logger>com.ti</logger>
+  <level>INFO</level>
+  <class>com.ti.ccstudio.scripting.environment.ScriptingEnvironment</class>
+  <method>traceWrite</method>
+  <thread>28</thread>
+  <message>Error in Flash Programmer.</message>
+</record>
+</log>
