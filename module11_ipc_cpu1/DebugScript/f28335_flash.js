@@ -3,17 +3,18 @@ importPackage(Packages.com.ti.debug.engine.scripting);
 importPackage(Packages.com.ti.ccstudio.scripting.environment);
 importPackage(Packages.java.lang);
 
+var absolutPath = "C:/Users/STarikUser/workspace_v10/ipc_gpio_toggle_cpu01"
 var Program1 	= "ipc_gpio_toggle_cpu01.out";
-var Executable 	= "C:\\Users\\STarikUser\\workspace_v10\\ipc_gpio_toggle_cpu01\\CPU1_FLASH_STANDALONE\\" + Program1;
+var Executable 	= absolutPath + "/CPU1_FLASH_STANDALONE/" + Program1;
 
 //Global handles to the debugger
 var env 	= ScriptingEnvironment.instance();
 
 // Create a log file in the current directory to log script execution
-env.traceBegin("BreakpointsTestLog.xml", "DefaultStylesheet.xsl");
+env.traceBegin(absolutPath +"/DebugScript/BreakpointsTestLog.xml", absolutPath +"/DebugScript/DefaultStylesheet.xsl");
 
 // Set our TimeOut
-env.setScriptTimeout(15000);
+env.setScriptTimeout(90000);
 
 // Log everything
 env.traceSetConsoleLevel(TraceLevel.ALL);
@@ -21,7 +22,7 @@ env.traceSetFileLevel(TraceLevel.ALL);
 
 //
 var server 	= env.getServer("DebugServer.1");
-server.setConfig("TMS320F28379D.ccxml");
+server.setConfig(absolutPath + "/DebugScript/TMS320F28379D.ccxml");
 
 //Texas Instruments XDS100v2 USB Debug Probe_0/C28xx_CPU1
 //Texas Instruments XDS100v2 USB Debug Probe_0/CPU1_CLA1
@@ -45,7 +46,7 @@ catch(err)
 
 
 // Create a log file in the current directory to log script execution
-env.traceBegin("FlashLog.xml", "DefaultStylesheet.xsl");
+env.traceBegin(absolutPath +"/DebugScript/FlashLog.xml", absolutPath +"/DebugScript/DefaultStylesheet.xsl");
 
 /* Connect to target
 */
@@ -69,15 +70,11 @@ env.traceWrite("CPU1, CPU1_CLA1, CPU2, CPU2_CLA2 are Connected!");
 env.traceWrite("sectors to erase");
 try{
 
-	env.traceWrite("***********Look up for the exact option usign the printOptions API***********");
-	env.traceWrite("***********Look up for the exact option usign the printOptions API***********");
-	env.traceWrite("***********Look up for the exact option usign the printOptions API***********");
+
 	env.traceWrite("***********Look up for the exact option usign the printOptions API***********");
 	CPU1Session.flash.options.printOptions(".*");
 	env.traceWrite("****************************************Done*********************************");
-	env.traceWrite("****************************************Done*********************************");
-	env.traceWrite("****************************************Done*********************************");
-	env.traceWrite("****************************************Done*********************************");
+
 	//CPU1Session.flash.options.setBoolean("FlashC28Bank0Sector0", true);
 	//CPU1Session.flash.options.setBoolean("FLASHB", true);
 	//CPU1Session.flash.options.setBoolean("FLASHC", true);
@@ -126,20 +123,20 @@ catch(err)
 try
 {
 	//Load the Program
-	env.traceWrite("Load Program: "+Program1);
+	env.traceWrite("Load Program: " + Program1);
 	env.traceWrite("Loading...");
 
 	// Load the same program to cpu1 and cpu 2
-	CPU1Session.memory.loadProgram(Executable );
+	CPU1Session.memory.loadProgram(Executable);
 	env.traceWrite("CPU1 done.");
 
-	CPU2Session.memory.loadProgram(Executable );
+	CPU2Session.memory.loadProgram(Executable);
 	env.traceWrite("CPU2 done.");
 
 	// Get Flash Checksum
 	env.traceWrite("Cheksum calculation for cpu1 and cpu2 ");
-	CPU1Session.flash.calculateChecksum();
-	CPU2Session.flash.calculateChecksum();
+	//CPU1Session.flash.calculateChecksum();
+	//CPU2Session.flash.calculateChecksum();
 }
 catch(err)
 {
@@ -156,13 +153,13 @@ dsArray[1] = CPU2Session;
 // Set a breakpoint at "main_cpu1"
 env.traceWrite("Set a breakpoint at main_cpu1");
 var maincpu1 = CPU1Session.symbol.getAddress("main");
-var cpu1bp1 = CPU1Session.breakpoint.add(maincpu1);
+var cpu1bp1  = CPU1Session.breakpoint.add(maincpu1);
 env.traceWrite("Done!");
 
 // Set a breakpoint at "main_cpu2"
 env.traceWrite("Set a breakpoint at main_cpu2");
-var maincpu2 = CPU2Session.symbol.getAddress("main");
-var cpu2bp1 = CPU2Session.breakpoint.add(maincpu2);
+//var maincpu2 = CPU2Session.symbol.getAddress("main");
+//var cpu2bp1  = CPU2Session.breakpoint.add(maincpu2);
 env.traceWrite("Done!");
 
 // Restart our Target
@@ -172,18 +169,28 @@ CPU2Session.target.restart();
 
 // Run our one by one
 env.traceWrite("Run our Target one by one ");
-CPU1Session.target.run();
-script.traceWrite("CPU 1 Runinng ...");
-CPU2Session.target.run();
-script.traceWrite("CPU 2 Runinng ...");
+//CPU1Session.target.run();
+env.traceWrite("CPU 1 Runinng ...");
+//CPU2Session.target.run();
+env.traceWrite("CPU 2 Runinng ...");
 
 // Run our Target simultaneous
 env.traceWrite("Run our Target simultaneous");
 server.simultaneous.run(dsArray); // Run CPUs 1 and 2
-script.traceWrite("Runinng ...");
+env.traceWrite("Runinng ...");
 
-//End CPU1Session, since the tests are done
-server.stop();
+// Halt our Target simultaneous
+env.traceWrite("Run our Target simultaneous");
+server.simultaneous.halt(dsArray); // Run CPUs 1 and 2
+env.traceWrite("Runinng ...");
+
+//Terminate CPUs
+CPU1Session.target.disconnect();
+CPU2Session.target.disconnect();
+
+//Terminate CLAs
+CPU1CLA1Session.target.disconnect();
+CPU2CLA2Session.target.disconnect();
 
 //Terminate CPU1
 CPU1Session.terminate();
@@ -192,3 +199,11 @@ CPU1CLA1Session.terminate();
 //Terminate CPU1
 CPU2Session.terminate();
 CPU2CLA2Session.terminate();
+
+//End CPU1Session, since the tests are done
+server.stop();
+
+env.traceSetConsoleLevel(TraceLevel.INFO)
+env.traceWrite("TEST SUCCEEDED!")
+
+env.traceEnd()
